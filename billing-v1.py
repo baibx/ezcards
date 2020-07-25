@@ -9,7 +9,7 @@ csv_name = name_file + ".csv"
 catchall = input("Catchall format(@catchall.com): ")
 
 main_address = input("Main address: ")
-number_of_letters = int(input("3 or 4 letters for the address jig: "))
+number_of_letters = int(input("0, 3 or 4 letters for the address jig (if you enter 0, there will be no jig for profiles such as fnl): "))
 addy2 = input("Do you want to use an address line 2 jig? Ex. Unit #194 (y/n): ")
 
 city = input("City: ")
@@ -73,6 +73,12 @@ with open(csv_name, "w") as csv_file:
 
         if number_of_letters == 3:
             address_line_one = rand_letters[0] + rand_letters[1] + rand_letters[2] + " " + main_address
+
+            if addy2 == 'y':
+                line_two = address_two_jig()
+        
+        elif number_of_letters == 0: 
+            address_line_one = main_address
 
             if addy2 == 'y':
                 line_two = address_two_jig()
