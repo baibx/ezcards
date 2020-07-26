@@ -6,7 +6,7 @@ import string
 name_file = input("Name this file: ")  #start of the program, naming
 csv_name = name_file + ".csv"
 
-catchall = input("Catchall format(@catchall.com): ")
+catchall = input("Catchall format(@catchall.com or basename@yahoo.com): ")
 
 main_address = input("Main address: ")
 number_of_letters = int(input("0, 3 or 4 letters for the address jig (if you enter 0, there will be no jig for profiles such as fnl): "))
@@ -48,7 +48,13 @@ with open(csv_name, "w") as csv_file:
 
         random_name = names.get_full_name()
         random_name_splitted = random_name.split(' ')
-        together_catchall = random_name_splitted[0] + random_name_splitted[1] + catchall
+
+        try:
+            yahoo = catchall.split('@yahoo.com')
+            basename = yahoo[0]
+            together_catchall = basename + '-' + random_name_splitted[0] + random_name_splitted[1] + '@yahoo.com'
+        except:
+            together_catchall = random_name_splitted[0] + random_name_splitted[1] + catchall
 
         area_code = ['347', '917', '631', '718']
         def phone_number():
