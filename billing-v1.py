@@ -21,11 +21,14 @@ i = 1
 number_of_profiles = input("How many profiles: ")
 profile_base_name = input("Base name for profiles Ex. footsites, ys...: ")
 
+yahoo_submitted = 10 
+
 if yahoo_catch[1] == 'yahoo.com':
-        text_file = open("yahoo.txt", "w")
+    text_file = open("yahoo.txt", "w")
+    yahoo_submitted += 1
         
 else: 
-        print('~~~~~~~~~~~~~~~~')
+    print('~~~~~~~~~~~~~~~~')
 
 with open(csv_name, "w") as csv_file:
     csv_writer = csv.writer(csv_file)
@@ -56,11 +59,10 @@ with open(csv_name, "w") as csv_file:
         random_name = names.get_full_name()
         random_name_splitted = random_name.split(' ')
 
-        try:
-            yahoo = catchall.split('@yahoo.com')
-            basename = yahoo[0]
+        if yahoo_submitted == 11:
+            basename = yahoo_catch[0]
             together_catchall = basename + '-' + random_name_splitted[0] + random_name_splitted[1] + '@yahoo.com'
-        except:
+        else:
             together_catchall = random_name_splitted[0] + random_name_splitted[1] + catchall
 
         area_code = ['347', '917', '631', '718']
