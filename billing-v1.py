@@ -116,4 +116,8 @@ with open(csv_name, "w") as csv_file:
         i += 1
 
 csv_file.close()
-text_file.close()
+
+try: 
+    text_file.close()
+except NameError: 
+    print("Bye~")
