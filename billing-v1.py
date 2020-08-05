@@ -7,6 +7,7 @@ name_file = input("Name this file: ")  #start of the program, naming
 csv_name = name_file + ".csv"
 
 catchall = input("Catchall format(@catchall.com or basename@yahoo.com): ")
+yahoo_catch = catchall.split('@')
 
 main_address = input("Main address: ")
 number_of_letters = int(input("0, 3 or 4 letters for the address jig (if you enter 0, there will be no jig for profiles such as fnl): "))
@@ -19,6 +20,12 @@ zipcode = int(input("Zipcode: "))
 i = 1 
 number_of_profiles = input("How many profiles: ")
 profile_base_name = input("Base name for profiles Ex. footsites, ys...: ")
+
+if yahoo_catch[1] == 'yahoo.com':
+        text_file = open("yahoo.txt", "w")
+        
+else: 
+        print('~~~~~~~~~~~~~~~~')
 
 with open(csv_name, "w") as csv_file:
     csv_writer = csv.writer(csv_file)
@@ -40,7 +47,7 @@ with open(csv_name, "w") as csv_file:
             type_of_card = "Visa"
         
         card_number = input("Card Number: ")
-        expiration_date = input("Expiration date(XX/20XX): ") 
+        expiration_date = input("Expiration date(XX/XX): ") 
         expiration_date_splitted = expiration_date.split('/')
         expiration_month = expiration_date_splitted[0]
         expiration_year = expiration_date_splitted[1]
@@ -94,9 +101,19 @@ with open(csv_name, "w") as csv_file:
 
             if addy2 == 'y':
                 line_two = address_two_jig()
+
+        try: 
+            text_file.write(random_name_splitted[0] + random_name_splitted[1])
+            text_file.write("\n")
+            text_file.write(random_name)
+            text_file.write("\n")
+        except:
+            print('~~~~~~~~~~~~~~~~~~')
         
         csv_writer.writerow([together_catchall, profile_name, 'FALSE', random_name, type_of_card, card_number, expiration_month, expiration_year, cvv, 'TRUE', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', random_name, phone, address_line_one, line_two, ' ', zipcode, city, state, 'United States', ' ', ' '])
+
 
         i += 1
 
 csv_file.close()
+text_file.close()
