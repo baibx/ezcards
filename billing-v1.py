@@ -35,6 +35,10 @@ with open(csv_name, "w") as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Email Address', 'Profile Name', 'Only One Checkout', 'Name on Card', 'Card Type', 'Card Number', 'Expiration Month', 'Expiration Year', 'CVV', 'Same Billing/Shipping', 'Shipping Name', 'Shipping Phone', 'Shipping Address', 'Shipping Address 2', 'Shipping Address 3', 'Shipping Post Code', 'Shipping City', 'Shipping State', 'Shipping Country', 'Billing Name', 'Billing Phone', 'Billing Address', 'Billing Address 2', 'Billing Address 3', 'Billing Post Code', 'Billing City', 'Billing State', 'Billing Country', 'otherEntriesList', 'Size (Optional)'])
 
+    expiration_date_all = input("Is expiration date all the same? (y/n): ")
+    if expiration_date_all == 'y':
+        expiration_date_global = input("Expiration date - global (XX/XX): ")
+
     while i <= int(number_of_profiles):
         profile_name = profile_base_name + str(i)
 
@@ -51,7 +55,11 @@ with open(csv_name, "w") as csv_file:
             type_of_card = "Visa"
         
         card_number = input("Card Number: ")
-        expiration_date = input("Expiration date(XX/XX): ") 
+        if expiration_date_all == 'y': 
+            expiration_date = expiration_date_global
+        else:
+            expiration_date = input("Expiration date(XX/XX): ")
+        
         expiration_date_splitted = expiration_date.split('/')
         expiration_month = expiration_date_splitted[0]
         expiration_year = expiration_date_splitted[1]
@@ -66,7 +74,15 @@ with open(csv_name, "w") as csv_file:
         else:
             together_catchall = random_name_splitted[0] + random_name_splitted[1] + catchall
 
-        area_code = ['347', '917', '631', '718']
+        if city.lower() == "brooklyn":
+            area_code = ['347', '917', '631', '718']
+        elif city.lower() == "flushing":
+            area_code = ['718', '347', '917', '929']
+        elif city.lower() == "pottstown":
+            area_code = ['610', '484']
+        else: 
+            area_code = ['347', '917', '631', '718']
+            
         def phone_number():
             random_area_code = random.choice(area_code) + str(random.randint(1111111, 9999999))
 
