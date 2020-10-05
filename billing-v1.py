@@ -4,6 +4,31 @@ import random
 import string
 import json
 
+def phone_number():
+    random_area_code = random.choice(area_code) + str(random.randint(1111111, 9999999))
+
+    return random_area_code
+
+def address_two_jig():        
+    random_number_for_addy2 = random.randint(0,999)
+    address_line_two = ['Unit', 'APT', 'Apartment']
+    jigged2 = random.choice(address_line_two) + " #" + str(random_number_for_addy2)
+
+    return jigged2
+
+def card_type_function(card_type):
+    if int(card_type) == 1: 
+        type_of_card = "AmericanExpress"
+    elif int(card_type) == 2: 
+        type_of_card = "MasterCard"
+    elif int(card_type) == 3: 
+        type_of_card = "Discover"
+    else: 
+        type_of_card = "Visa"
+
+    return type_of_card 
+
+
 name_file = input("Name this file: ")  #start of the program, naming
 csv_name = name_file + ".csv"
 
@@ -22,11 +47,11 @@ i = 1
 number_of_profiles = input("How many profiles: ")
 profile_base_name = input("Base name for profiles Ex. footsites, ys...: ")
 
-yahoo_submitted = 10 
+
 
 if yahoo_catch[1] == 'yahoo.com':
     text_file = open("yahoo.txt", "w")
-    yahoo_submitted += 1
+    yahoo_yes = True
         
 else: 
     print('~~~~~~~~~~~~~~~~')
@@ -39,21 +64,24 @@ with open(csv_name, "w") as csv_file:
     if expiration_date_all == 'y':
         expiration_date_global = input("Expiration date - global (XX/XX): ")
 
+    card_type_all = input("Are card types all the same? (y/n): ")
+    if card_type_all == 'y':
+        print('1. AmericanExpress \n2. MasterCard \n3. Discover \n4. Visa')
+        card_type_global = input("Global Card type (use the numbers): ")
+
     while i <= int(number_of_profiles):
+        print("You are on profile #" + str(i))
         profile_name = profile_base_name + str(i)
 
-        print('1. AmericanExpress \n2. MasterCard \n3. Discover \n4. Visa')
-        card_type = input("Card type (use the numbers): ")
-
-        if int(card_type) == 1: 
-            type_of_card = "AmericanExpress"
-        elif int(card_type) == 2: 
-            type_of_card = "MasterCard"
-        elif int(card_type) == 3: 
-            type_of_card = "Discover"
-        else: 
-            type_of_card = "Visa"
         
+        if card_type_all == 'y':
+            type_card = card_type_function(card_type_global)
+        else: 
+            print('1. AmericanExpress \n2. MasterCard \n3. Discover \n4. Visa')
+            card_type_not_global = input("Card type (use the numbers): ")
+
+            type_card = card_type_function(card_type_not_global)
+
         card_number = input("Card Number: ")
         if expiration_date_all == 'y': 
             expiration_date = expiration_date_global
@@ -68,7 +96,7 @@ with open(csv_name, "w") as csv_file:
         random_name = names.get_full_name()
         random_name_splitted = random_name.split(' ')
 
-        if yahoo_submitted == 11:
+        if yahoo_yes == True:
             basename = yahoo_catch[0]
             together_catchall = basename + '-' + random_name_splitted[0] + random_name_splitted[1] + '@yahoo.com'
         else:
@@ -83,23 +111,9 @@ with open(csv_name, "w") as csv_file:
         else: 
             area_code = ['347', '917', '631', '718']
             
-        def phone_number():
-            random_area_code = random.choice(area_code) + str(random.randint(1111111, 9999999))
-
-            return random_area_code
-
         phone = phone_number()
 
         line_two = ' '
-
-        def address_two_jig():
-            
-            random_number_for_addy2 = random.randint(0,999)
-            address_line_two = ['Unit', 'APT', 'Apartment']
-            jigged2 = random.choice(address_line_two) + " #" + str(random_number_for_addy2)
-
-            return jigged2
-        
         letters = string.ascii_uppercase
         rand_letters = random.choices(letters,k=number_of_letters)
 
@@ -129,7 +143,7 @@ with open(csv_name, "w") as csv_file:
         except:
             print('~~~~~~~~~~~~~~~~~~')
         
-        csv_writer.writerow([together_catchall, profile_name, 'FALSE', random_name, type_of_card, card_number, expiration_month, expiration_year, cvv, 'TRUE', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', random_name, phone, address_line_one, line_two, ' ', zipcode, city, state, 'United States', ' ', ' '])
+        csv_writer.writerow([together_catchall, profile_name, 'FALSE', random_name, type_card, card_number, expiration_month, expiration_year, cvv, 'TRUE', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', random_name, phone, address_line_one, line_two, ' ', zipcode, city, state, 'United States', ' ', ' '])
 
 
         i += 1
