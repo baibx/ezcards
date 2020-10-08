@@ -48,10 +48,10 @@ number_of_profiles = input("How many profiles: ")
 profile_base_name = input("Base name for profiles Ex. footsites, ys...: ")
 
 
-
+yahoo_submitted = False
 if yahoo_catch[1] == 'yahoo.com':
     text_file = open("yahoo.txt", "w")
-    yahoo_yes = True
+    yahoo_submitted = True
         
 else: 
     print('~~~~~~~~~~~~~~~~')
@@ -96,7 +96,7 @@ with open(csv_name, "w") as csv_file:
         random_name = names.get_full_name()
         random_name_splitted = random_name.split(' ')
 
-        if yahoo_yes == True:
+        if yahoo_submitted == True:
             basename = yahoo_catch[0]
             together_catchall = basename + '-' + random_name_splitted[0] + random_name_splitted[1] + '@yahoo.com'
         else:
